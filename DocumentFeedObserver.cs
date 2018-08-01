@@ -56,6 +56,8 @@ namespace ChangeFeedProcessor
         /// <returns>A Task to allow asynchronous execution</returns>
         public Task OpenAsync(ChangeFeedObserverContext context)
         {
+            EchoApp.Program.logDebug("OpenAsync");
+
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Observer opened for partition Key Range: {0}", context.PartitionKeyRangeId);
             return Task.CompletedTask;
@@ -70,6 +72,7 @@ namespace ChangeFeedProcessor
         /// <returns>A Task to allow asynchronous execution</returns>
         public Task CloseAsync(ChangeFeedObserverContext context, ChangeFeedObserverCloseReason reason)
         {
+            EchoApp.Program.logDebug("CloseAsync");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Observer closed, {0}", context.PartitionKeyRangeId);
             Console.WriteLine("Reason for shutdown, {0}", reason);
@@ -85,6 +88,7 @@ namespace ChangeFeedProcessor
         /// <returns>A Task to allow asynchronous execution</returns>
         public Task ProcessChangesAsync(ChangeFeedObserverContext context, IReadOnlyList<Document> docs)
         {
+            EchoApp.Program.logDebug("ProcessChangesAsync");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Change feed: PartitionId {0} total {1} doc(s)", context.PartitionKeyRangeId, Interlocked.Add(ref totalDocs, docs.Count));
             foreach (Document doc in docs)

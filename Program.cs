@@ -222,8 +222,8 @@ logDebug("2");
                 Console.WriteLine("Running... Press enter to stop.");
                 Console.ReadLine();
 logDebug("3");
-
-                await host.UnregisterObserversAsync();
+                // do not unreg
+                // await host.UnregisterObserversAsync();
             }
         }
     }

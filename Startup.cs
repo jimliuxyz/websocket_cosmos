@@ -81,6 +81,7 @@ namespace EchoApp
             Task.Run(async ()=>{
                 var idx = 0;
                 foreach(WebSocket soc in sockets){
+                    EchoApp.Program.logDebug("send["+(idx++)+"] : " + str);
                     Console.WriteLine("send["+(idx++)+"] : " + str);
                     await soc.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(str)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
                 }

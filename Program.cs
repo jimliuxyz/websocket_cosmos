@@ -114,7 +114,10 @@ namespace EchoApp
 
             host.Run();
 
+            logDebug("wait...");
             Console.ReadLine();
+            logDebug("end...");
+
         }
 
         /// <summary>
@@ -211,10 +214,11 @@ namespace EchoApp
             // ie. customizing lease renewal interval to 15 seconds
             // can customize LeaseRenewInterval, LeaseAcquireInterval, LeaseExpirationInterval, FeedPollDelay 
             feedHostOptions.LeaseRenewInterval = TimeSpan.FromSeconds(15);
-
+logDebug("1");
             using (DocumentClient destClient = new DocumentClient(destCollInfo.Uri, destCollInfo.MasterKey))
             {
                 DocumentFeedObserverFactory docObserverFactory = new DocumentFeedObserverFactory(destClient, destCollInfo);
+logDebug("2");
 
                 ChangeFeedEventHost host = new ChangeFeedEventHost(hostName, documentCollectionLocation, leaseCollectionLocation, feedOptions, feedHostOptions);
 
@@ -222,8 +226,9 @@ namespace EchoApp
 
                 Console.WriteLine("Running... Press enter to stop.");
                 Console.ReadLine();
-
-                await host.UnregisterObserversAsync();
+logDebug("31");
+                // do not unreg
+                // await host.UnregisterObserversAsync();
             }
         }
     }

@@ -27,6 +27,8 @@ namespace EchoApp
         //     host.Run();
         // }
 
+        public static string debuglog = "";
+
         // Modify EndPointUrl and PrimaryKey to connect to your own subscription
         private string monitoredUri = ConfigurationManager.AppSettings["monitoredUri"];
         private string monitoredSecretKey = ConfigurationManager.AppSettings["monitoredSecretKey"];
@@ -61,7 +63,13 @@ namespace EchoApp
         {
             Console.WriteLine("Change Feed Processor client Started at: " + DateTime.Now.ToShortTimeString());
             app = new Program();
+            logDebug(app.monitoredUri);
+
             app.MainAsync().Wait();
+        }
+
+        public static void logDebug(string msg){
+            debuglog += msg + "<br>\n";
         }
 
         /// <summary>
@@ -201,10 +209,11 @@ namespace EchoApp
             // ie. customizing lease renewal interval to 15 seconds
             // can customize LeaseRenewInterval, LeaseAcquireInterval, LeaseExpirationInterval, FeedPollDelay 
             feedHostOptions.LeaseRenewInterval = TimeSpan.FromSeconds(15);
-
+logDebug("1");
             using (DocumentClient destClient = new DocumentClient(destCollInfo.Uri, destCollInfo.MasterKey))
             {
                 DocumentFeedObserverFactory docObserverFactory = new DocumentFeedObserverFactory(destClient, destCollInfo);
+logDebug("2");
 
                 ChangeFeedEventHost host = new ChangeFeedEventHost(hostName, documentCollectionLocation, leaseCollectionLocation, feedOptions, feedHostOptions);
 

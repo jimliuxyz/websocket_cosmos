@@ -91,7 +91,8 @@ namespace EchoApp
         {
             sockets.Add(webSocket);
             var t = Task.Delay(100).ContinueWith(async (t1)=>{
-	            await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("connected..." + Environment.GetEnvironmentVariable("REGION_NAME"))), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
+	            await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("connected1..." + Environment.GetEnvironmentVariable("REGION_NAME"))), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
+	            await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(EchoApp.Program.debuglog)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
             });
 
             var buffer = new byte[1024 * 4];

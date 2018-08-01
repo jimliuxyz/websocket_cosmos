@@ -81,7 +81,7 @@ namespace EchoApp
             Task.Run(async ()=>{
                 var idx = 0;
                 foreach(WebSocket soc in sockets){
-                    EchoApp.Program.logDebug("send["+(idx++)+"] : " + str);
+                    // EchoApp.Program.logDebug("send["+(idx++)+"] : " + str);
                     Console.WriteLine("send["+(idx++)+"] : " + str);
                     await soc.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(str)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
                 }
@@ -92,8 +92,8 @@ namespace EchoApp
         {
             sockets.Add(webSocket);
             var t = Task.Delay(100).ContinueWith(async (t1)=>{
-	            await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("connected2..." + Environment.GetEnvironmentVariable("REGION_NAME"))), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
-	            await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(EchoApp.Program.debuglog)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
+	            await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("connected..." + EchoApp.Program.region)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
+	            // await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(EchoApp.Program.debuglog)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
             });
 
             var buffer = new byte[1024 * 4];

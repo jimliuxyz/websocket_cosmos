@@ -59,9 +59,12 @@ namespace EchoApp
         /// <param name="args">Command line parameters (not used)</param>
 
         public static Program app;
+        public static string region;
         public static void Main(string[] args)
         {
-            Console.WriteLine("Change Feed Processor client Started at: " + DateTime.Now.ToShortTimeString());
+            region = Environment.GetEnvironmentVariable("REGION_NAME");
+            region = (region==null || region.Length <=0) ? "none":region;
+
             app = new Program();
             logDebug(app.monitoredUri);
 
@@ -79,7 +82,8 @@ namespace EchoApp
         /// <returns>A Task to allow asynchronous execution</returns>
         private async Task MainAsync()
         {
-            this.leaseCollectionName += "_" + Environment.GetEnvironmentVariable("REGION_NAME");
+            this.leaseCollectionName += "_" + region;
+
             await this.CreateCollectionIfNotExistsAsync(
                 this.monitoredUri,
                 this.monitoredSecretKey,
@@ -135,8 +139,8 @@ namespace EchoApp
         /// <returns>A Task to allow asynchronous execution</returns>
         public async Task CreateCollectionIfNotExistsAsync(string endPointUri, string secretKey, string databaseName, string collectionName, int throughput)
         {
-            Console.WriteLine("endPointUri:{0}", endPointUri);
-            Console.WriteLine("secretKey:{0}", secretKey);
+            Console.WriteLine("databaseName:{0}", databaseName);
+            Console.WriteLine("collectionName:{0}", collectionName);
             // connecting client 
             using (DocumentClient client = new DocumentClient(new Uri(endPointUri), secretKey))
             {
@@ -215,6 +219,9 @@ namespace EchoApp
             // ie. customizing lease renewal interval to 15 seconds
             // can customize LeaseRenewInterval, LeaseAcquireInterval, LeaseExpirationInterval, FeedPollDelay 
             feedHostOptions.LeaseRenewInterval = TimeSpan.FromSeconds(15);
+            feedHostOptions.LeaseRenewInterval = TimeSpan.FromMilliseconds(100);
+            feedHostOptions.LeaseAcquireInterval = TimeSpan.FromMilliseconds(100);
+            feedHostOptions.FeedPollDelay = TimeSpan.FromMilliseconds(100);
 
             using (DocumentClient destClient = new DocumentClient(destCollInfo.Uri, destCollInfo.MasterKey))
             {

@@ -72,7 +72,7 @@ namespace ChangeFeedProcessor
         /// <returns>A Task to allow asynchronous execution</returns>
         public Task CloseAsync(ChangeFeedObserverContext context, ChangeFeedObserverCloseReason reason)
         {
-            EchoApp.Program.logDebug("CloseAsync");
+            EchoApp.Program.logDebug("CloseAsync "+reason);
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Observer closed, {0}", context.PartitionKeyRangeId);
             Console.WriteLine("Reason for shutdown, {0}", reason);

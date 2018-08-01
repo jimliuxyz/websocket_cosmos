@@ -113,6 +113,11 @@ namespace EchoApp
                 .Build();
 
             host.Run();
+
+            logDebug("wait...");
+            Console.ReadLine();
+            logDebug("end...");
+
         }
 
         /// <summary>
@@ -221,7 +226,7 @@ logDebug("2");
 
                 Console.WriteLine("Running... Press enter to stop.");
                 Console.ReadLine();
-logDebug("3");
+logDebug("31");
                 // do not unreg
                 // await host.UnregisterObserversAsync();
             }

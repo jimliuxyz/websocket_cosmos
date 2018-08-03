@@ -61,7 +61,7 @@ namespace EchoApp
         public static Program app;
         public static string region;
         // static string APP_UUID = Guid.NewGuid().ToString();
-        static string APP_UUID = new Random().Next().ToString();
+        public static string APP_UUID = new Random().Next().ToString();
         public static void Main(string[] args)
         {
             region = Environment.GetEnvironmentVariable("REGION_NAME");

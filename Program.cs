@@ -60,6 +60,8 @@ namespace EchoApp
 
         public static Program app;
         public static string region;
+        // static string APP_UUID = Guid.NewGuid().ToString();
+        static string APP_UUID = new Random().Next().ToString();
         public static void Main(string[] args)
         {
             region = Environment.GetEnvironmentVariable("REGION_NAME");
@@ -82,7 +84,7 @@ namespace EchoApp
         /// <returns>A Task to allow asynchronous execution</returns>
         private async Task MainAsync()
         {
-            this.leaseCollectionName += "_" + region;
+            this.leaseCollectionName += "_" + region + "_" + APP_UUID;
 
             await this.CreateCollectionIfNotExistsAsync(
                 this.monitoredUri,

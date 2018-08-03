@@ -1,4 +1,4 @@
-﻿﻿#define UseOptions // or NoOptions
+﻿#define UseOptions // or NoOptions
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,9 +17,6 @@ namespace EchoApp
 {
     public class Startup
     {
-        // static string uuid = Guid.NewGuid().ToString();
-        static string uuid = new Random().Next().ToString();
-
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -100,7 +97,7 @@ namespace EchoApp
         {
             sockets.Add(webSocket);
             var t = Task.Delay(100).ContinueWith(async (t1)=>{
-	            await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("connected2..." + EchoApp.Program.region + " " + uuid)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
+	            await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("connected..." + EchoApp.Program.region)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
 	            // await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(EchoApp.Program.debuglog)), System.Net.WebSockets.WebSocketMessageType.Text, true, new CancellationToken());
             });
 
